@@ -1,0 +1,55 @@
+version: '3.5'
+services:
+
+  php:
+    container_name: fsilva-test
+    build:
+      context: ../
+      dockerfile: docker/php/php.dockerfile
+    restart: always
+    depends_on:
+      - mariadb
+    volumes:
+      - volume-test:/var/www/html/test
+    networks:
+      - test-network
+    ports:
+      - 9000:80
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    ports:
+      - 3906:3306
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MARIADB_ROOT_PASSWORD: abc123
+      MARIADB_DATABASE: konecta_cafe
+    networks:
+      - test-network
+    volumes:
+      - mariadb-test:/var/lib/mysql
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ../
+      dockerfile: docker/nginx/nginx.dockerfile
+    restart: always
+    ports:
+    - "8088:80"
+    volumes:
+      - volume-test:/var/www/html/test
+    depends_on:
+      - php
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  mariadb-test:
+  volume-test:
