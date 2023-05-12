@@ -1,10 +1,16 @@
 # *Test Konecta - Fabian Silva*
 
-## **Docker**
+## **Ejecute los siguientes pasos**
+
 1 - Instalar docker
 
+2 - clonar el repositorio en un directorio local
 
-2 - Ingresar al directorio docker y ejecutar el compose:
+```sh
+git clone https://github.com/silvapick/test.git
+```
+
+3 - Ingresar al directorio docker del proyecto y ejecutar el compose:
 
 ```sh
 cd docker/
@@ -14,7 +20,7 @@ cd docker/
 docker-compose up --build
 ```
 
-3 - Ejecutar migraciones y seeds
+4 - Desde otra terminal ejecutar los siguientes comandos
 
 ```sh
 docker exec -it fsilva-test /bin/sh
@@ -26,7 +32,7 @@ php artisan migrate:fresh --seed
 ### Datos conexión base de datos
 ```
 SERVER HOST = localhost
-PORT        = 3306
+PORT        = 3906
 DATABASE    = konecta_cafe
 USERNAME    = root
 PASSWORD    = abc123
